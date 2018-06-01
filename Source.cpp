@@ -172,6 +172,6 @@ int main(){
     while(!kbhit()||getch()!='=')Sleep(25);
     memset(block,0,sizeof(block));
     system("cls");
-    point.X=point.Y=0;
+    point.X=point.Y=score=0;changed=1;
     goto START;
 }
