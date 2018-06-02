@@ -61,7 +61,6 @@ int show(){
     char tmp[10]={};
     int m=0,t;
     SetConsoleCursorPosition(out,point);
-    //system("cls");
     printf("□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n");
     for(int i=0;i<4;i++){
         for(int j=0;j<7;j++){
@@ -118,9 +117,16 @@ inline int haveLost(){
     for(int i=0;i<4;i++)for(int j=0;(j<4&&i!=3)||j<3;j++)if((i<3&&block[i][j]==block[i+1][j])||(j<3&&block[i][j]==block[i][j+1]))return 0;
     return 1;
 }
+inline int nextLine(){
+    ++point.Y;
+    SetConsoleCursorPosition(out,point);
+    return 0;
+}
 int main(){
     system("cls");
     out=GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO cursorInfo={1,0};
+    SetConsoleCursorInfo(out,&cursorInfo);
     SetConsoleTitle("  [2048]");
     SetConsoleTextAttribute(out,7);
     char c;
@@ -136,7 +142,6 @@ int main(){
         if(lose==1)
             if((lose=haveLost())==1)
                 break;
-        while(!kbhit())Sleep(25);
         c=getch();
         if(c=='w'||c=='a'||c=='s'||c=='d')
             mov(c);
@@ -154,22 +159,17 @@ int main(){
     point.X=16;point.Y=12;
     SetConsoleCursorPosition(out,point);
     printf("          GameOver.         ");
-    ++point.Y;
-    SetConsoleCursorPosition(out,point);
+    nextLine();
     printf("                            ");
-    ++point.Y;
-    SetConsoleCursorPosition(out,point);
+    nextLine();
     printf("   Your Score Is:%7d   ",score);
-    ++point.Y;
-    SetConsoleCursorPosition(out,point);
+    nextLine();
     printf("                            ");
-    ++point.Y;
-    SetConsoleCursorPosition(out,point);
+    nextLine();
     printf("    Press '=' to restart.   ");
-    ++point.Y;
-    SetConsoleCursorPosition(out,point);
+    nextLine();
     printf("                            ");
-    while(!kbhit()||getch()!='=')Sleep(25);
+    while(getch()!='=');
     memset(block,0,sizeof(block));
     system("cls");
     point.X=point.Y=score=0;changed=1;
